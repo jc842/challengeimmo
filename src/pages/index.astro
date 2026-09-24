@@ -1,0 +1,155 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.lang || data.lang === 'fr');
+allPosts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+
+const featuredPost = allPosts[0];
+const recentPosts = allPosts.slice(1, 7);
+---
+
+<Layout title="Challenge Immo — Stratégies d'Investissement Immobilier & Gestion de Patrimoine" description="Le portail indépendant des investisseurs avisés : simulation de rentabilité locative, optimisation fiscale LMNP / SCI, effet de levier du crédit et sélection d'actifs résilients.">
+  <!-- Hero Section Style Lexington Sandstone (Corporate Luxury Navy & Sand Warmth) -->
+  <section class="relative bg-slate-950 text-white overflow-hidden border-b border-slate-800">
+    <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#6366f1_1px,transparent_1px)] [background-size:32px_32px]"></div>
+    
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 lg:py-28">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+        <div class="lg:col-span-7">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-indigo-950 text-indigo-300 border border-indigo-800 mb-6">
+            <span class="w-2 h-2 rounded-full bg-indigo-400 animate-pulse"></span>
+            Observatoire des Rendements & Ingénierie Patrimoniale
+          </div>
+          
+          <h1 class="text-4xl sm:text-6xl font-extrabold tracking-tight text-white leading-tight font-sans">
+            Optimisez Vos Actifs avec une <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-300 via-sky-300 to-amber-200">Vision Stratégique</span>
+          </h1>
+          
+          <p class="mt-6 text-lg sm:text-xl text-slate-300 max-w-2xl font-normal leading-relaxed">
+            Analyses quantitatives, régimes d'amortissement LMNP, optimisation du cash-flow locatif et sélection des meilleures opportunités immobilières 2026.
+          </p>
+
+          <div class="mt-8 flex flex-wrap gap-4 items-center">
+            <a href="#dossiers" class="px-6 py-3.5 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-sm tracking-wide transition-all shadow-lg shadow-indigo-600/20">
+              Explorer les Analyses de Rentabilité &darr;
+            </a>
+            <a href="/blog/" class="px-6 py-3.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-semibold text-sm border border-slate-700 transition-all">
+              Index des 200 Articles &rarr;
+            </a>
+          </div>
+
+          <!-- Sandstone Financial Indicators Bar -->
+          <div class="mt-12 grid grid-cols-3 gap-6 pt-8 border-t border-slate-800">
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-indigo-400 font-mono">LMNP</div>
+              <div class="text-xs text-slate-400 mt-1">Amortissement Fiscal Intégral</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-white font-mono">6% à 9%</div>
+              <div class="text-xs text-slate-400 mt-1">Cibles de Cash-Flow Net</div>
+            </div>
+            <div>
+              <div class="text-2xl sm:text-3xl font-black text-indigo-400 font-mono">100%</div>
+              <div class="text-xs text-slate-400 mt-1">Indépendant des Réseaux</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Featured Card -->
+        {featuredPost && (
+          <div class="lg:col-span-5">
+            <div class="bg-slate-900/90 border border-slate-800 rounded-3xl p-6 sm:p-8 relative shadow-2xl group hover:border-indigo-500/40 transition-all backdrop-blur-sm">
+              <div class="flex items-center justify-between mb-4">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-400 bg-indigo-950 px-3 py-1 rounded-full border border-indigo-800/60">
+                  Dossier Stratégique à la Une
+                </span>
+                <span class="text-xs text-slate-400 font-mono">
+                  {new Date(featuredPost.data.pubDate).toLocaleDateString('fr-FR', { month: 'short', year: 'numeric' })}
+                </span>
+              </div>
+              <h2 class="text-2xl font-bold text-white group-hover:text-indigo-300 transition-colors leading-snug">
+                <a href={`/blog/${featuredPost.id}/`}>{featuredPost.data.title}</a>
+              </h2>
+              {featuredPost.data.description && (
+                <p class="mt-3 text-slate-300 text-sm line-clamp-3 leading-relaxed">
+                  {featuredPost.data.description}
+                </p>
+              )}
+              <div class="mt-6 pt-6 border-t border-slate-800 flex items-center justify-between">
+                <span class="text-xs text-slate-400 font-medium">Secteur: <strong class="text-slate-200">{featuredPost.data.category}</strong></span>
+                <a href={`/blog/${featuredPost.id}/`} class="text-xs font-bold text-indigo-400 group-hover:text-indigo-300 flex items-center gap-1">
+                  Consulter l'audit &rarr;
+                </a>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
+    </div>
+  </section>
+
+  <!-- Bento Grid Sandstone Section -->
+  <section id="dossiers" class="py-20 bg-slate-900/40">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-xs font-bold uppercase tracking-widest text-indigo-400 mb-2">Ingénierie Immobilière & Patrimoniale</h2>
+        <p class="text-3xl sm:text-4xl font-extrabold text-slate-900 dark:text-white">Les Piliers de l'Investissement Réussi</p>
+        <p class="mt-3 text-base text-slate-600 dark:text-slate-400">Des guides complets pour sécuriser votre épargne et bâtir des rentes pérennes.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {recentPosts.map((post) => (
+          <article class="bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl p-6 hover:border-indigo-500 transition-all flex flex-col justify-between group shadow-sm hover:shadow-xl">
+            <div>
+              <div class="flex items-center justify-between mb-3">
+                <span class="text-xs font-bold uppercase tracking-wider text-indigo-600 dark:text-indigo-400">
+                  {post.data.category || 'Investissement'}
+                </span>
+                <span class="text-xs text-slate-400">
+                  {new Date(post.data.pubDate).toLocaleDateString('fr-FR', { day: 'numeric', month: 'short' })}
+                </span>
+              </div>
+              <h3 class="text-lg font-bold text-slate-900 dark:text-white group-hover:text-indigo-400 transition-colors line-clamp-2 mb-2">
+                <a href={`/blog/${post.id}/`}>{post.data.title}</a>
+              </h3>
+              {post.data.description && (
+                <p class="text-sm text-slate-600 dark:text-slate-400 line-clamp-3">
+                  {post.data.description}
+                </p>
+              )}
+            </div>
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <span class="text-xs text-slate-500 dark:text-slate-400">Analyse validée</span>
+              <a href={`/blog/${post.id}/`} class="text-xs font-bold text-indigo-600 dark:text-indigo-400 group-hover:translate-x-1 transition-transform">
+                Étudier &rarr;
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-12 text-center">
+        <a href="/blog/" class="inline-flex items-center gap-2 px-8 py-4 rounded-xl bg-slate-900 text-white dark:bg-white dark:text-slate-900 font-bold text-sm hover:bg-indigo-600 dark:hover:bg-indigo-400 transition-all shadow-md">
+          Consulter l'Ensemble des 200 Analyses & Dossiers &rarr;
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- International Callout -->
+  <section class="py-12 border-t border-slate-200 dark:border-slate-800 bg-slate-50 dark:bg-slate-950">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <p class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-4">International Editions / Ediciones Internacionales</p>
+      <div class="flex justify-center items-center gap-6 text-sm font-semibold">
+        <a href="/en/" class="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1.5">
+          <span>🇬🇧</span> English Edition (Real Estate Investment Advisory)
+        </a>
+        <span class="text-slate-300 dark:text-slate-700">|</span>
+        <a href="/es/" class="text-indigo-600 dark:text-indigo-400 hover:underline flex items-center gap-1.5">
+          <span>🇪🇸</span> Edición en Español (Asesoría en Inversión Inmobiliaria)
+        </a>
+      </div>
+    </div>
+  </section>
+</Layout>

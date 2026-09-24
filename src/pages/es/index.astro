@@ -1,0 +1,49 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('blog', ({ data }) => data.lang === 'es');
+posts.sort((a, b) => new Date(b.data.pubDate).getTime() - new Date(a.data.pubDate).getTime());
+---
+
+<Layout title="Challenge Immo — Asesoría en Inversión Inmobiliaria y Gestión Patrimonial (Edición en Español)" description="Guías estratégicas de rentabilidad locativa, optimización fiscal, cálculo de cash-flow y auditorías técnicas de activos inmobiliarios." lang="es">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold uppercase tracking-wider bg-indigo-50 text-indigo-800 border border-indigo-200 mb-4">
+        Edición en Español
+      </span>
+      <h1 class="text-4xl sm:text-5xl font-extrabold text-slate-900 tracking-tight">
+        Asesoría en Inversión Inmobiliaria
+      </h1>
+      <p class="mt-4 text-lg text-slate-600">
+        Análisis independiente para maximizar rentabilidades por alquiler, estructurar hipotecas y construir un patrimonio sólido.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {posts.map(post => (
+        <article class="bg-white border border-slate-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between">
+          <div>
+            <span class="inline-block text-xs font-bold text-indigo-600 uppercase tracking-wider mb-2">
+              {post.data.category}
+            </span>
+            <h2 class="text-xl font-bold text-slate-900 mb-3 hover:text-indigo-600 transition-colors">
+              <a href={`/es/${post.id.replace(/^es\//, '')}/`}>{post.data.title}</a>
+            </h2>
+            <p class="text-slate-600 text-sm line-clamp-3 mb-4">
+              {post.data.description}
+            </p>
+          </div>
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <span class="text-xs text-slate-400">
+              {new Date(post.data.pubDate).toLocaleDateString('es-ES', { month: 'short', day: 'numeric', year: 'numeric' })}
+            </span>
+            <a href={`/es/${post.id.replace(/^es\//, '')}/`} class="text-sm font-semibold text-indigo-600 hover:text-indigo-800">
+              Leer artículo &rarr;
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</Layout>
